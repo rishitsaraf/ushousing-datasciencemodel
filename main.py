@@ -14,7 +14,8 @@ import plotly.graph_objects as go
 
 ###########################
 
-st.set_page_config(layout="wide")
+st.set_page_config(page_title="USA Housing Market in the past 2 Decades",
+     page_icon="🏠",layout="wide")
 
 st.title('How various factors have influenced the housing prices over the past 2 decades - A case Study 📔')
 
