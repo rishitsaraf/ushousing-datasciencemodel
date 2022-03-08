@@ -1,0 +1,97 @@
+{
+    "title": {
+        "media": {
+          "url": "",
+          "caption": " <a target=\"_blank\" href=''>credits</a>",
+          "credit": ""
+        },
+        "text": {
+          "headline": " A Timeline <br> of major events",
+          "text": "<p>A brief description of all the major economic events that occured in the past 2 decades that could have impacted the Case Shiller Home Price Index </p>"
+        }
+    },
+    "events": [
+      {
+        "media": {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Nasdaq_Composite_dot-com_bubble.svg/1200px-Nasdaq_Composite_dot-com_bubble.svg.png",
+          "caption": "Nasdaq composite index daily close"
+        },
+        "start_date": {
+          "year": "2001"
+        },
+        "text": {
+          "headline": "The Dot-Com bubble burst",
+          "text": "<p> The bubble burst between 2001 and 2002 with equities entering a bear market. The crash that followed saw the Nasdaq index tumble by 76.81%. Destroying $6.2 trillion in household wealth over the next two years.</p>"
+        }
+      },
+      {
+        "media": {
+          "url": "data:image/jpeg;base64,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",
+          "caption": "-"
+        },
+        "start_date": {
+          "year": "2001",
+          "month":"9"
+        },
+        "text": {
+          "headline": "The 9/11 Attacks",
+          "text": "<p> The immediate impact of the 9/11 attack was to reduce real GDP growth in 2001 by 0.5%, and to increase the unemployment rate by 0.11% (reduce employment by 598,000 jobs.)</p>"
+        }
+      },
+      {
+        "media": {
+          "url": "https://cdn.britannica.com/68/165868-050-BDC8A9BC/neighbourhood-Port-Sulphur-Louisiana-Hurricane-Katrina.jpg",
+          "caption": "A flooded neighbourhood after Hurricane Katrina."
+        },
+        "start_date": {
+          "year": "2005",
+          "month":"8"
+        },
+        "text": {
+          "headline": "Hurricane Katrina",
+          "text": "<p> Hurricane Katrina is tied as the costliest hurricane to have ever hit the United States, with $125 billion in damages.<br><br>The storm’s economic effects were felt by the country at large. Katrina impacted up to 19% of the total U.S. oil production, as 24% of the country's natural gas supply is housed in or around areas impacted by the storm.<br> <br>Besides the death toll, hurricane Katrina left many people homeless as more than 800,000 housing units were destroyed or damaged in the storm.</p>"
+        }
+      },
+      {
+        "media": {
+          "url": "https://partners4prosperity.com//wp-content/uploads/2012/01/recession.jpg",
+          "caption": "-"
+        },
+        "start_date": {
+          "year": "2007",
+          "month":"12"
+        },
+        "text": {
+          "headline": "The Great Recession",
+          "text": "<p>It is considered the most significant downturn since the Great Depression. The recession officially lasted from December 2007 to June 2009. The economic slump began when the U.S. housing market went from boom to bust, and large amounts of mortgage-backed securities and derivatives lost significant value.</p>"
+        }
+      },      
+      {
+        "media": {
+          "url": "https://i.insider.com/5b6964b40ce5f5193a8b460c?width=1136&format=jpeg",
+          "caption": "-"
+        },
+        "start_date": {
+          "year": "2008"
+        },
+        "text": {
+          "headline": "The housing bubble burst",
+          "text": "<p>Americans faced financial disaster as the value of their homes dropped well below the amount they had borrowed, and subprime interest rates spiked.</p>"
+        }
+      },
+      {
+        "media": {
+          "url": "https://njbmagazine.com/wp-content/uploads/2020/04/NJBIA-InAction-COVID-Crash_330269375.jpg",
+          "caption": "-"
+        },
+        "start_date": {
+          "year": "2019",
+          "month":"2"
+        },
+        "text": {
+          "headline": "COVID-19",
+          "text": "<p>The economic impact of the COVID-19 pandemic in the United States has been widely disruptive, adversely affecting travel, financial markets, employment, shipping, and other industries.<br><br> The COVID-19 pandemic created a devastating recession as the economy shrank a record 31.4% in the second quarter of 2020.<br><br>COVID-19–related job losses wiped out 113 straight months of job growth, with total nonfarm employment falling by 20.5 million jobs.</p>"
+        }
+      }
+    ]
+}
