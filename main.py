@@ -13,7 +13,6 @@ from streamlit_timeline import timeline
 import plotly.graph_objects as go
 import seaborn as sns
 import plotly.figure_factory as ff
-from sklearn import linear_model
 
 ###########################
 
