@@ -11,11 +11,13 @@ from PIL import Image
 import plotly.express as px
 from streamlit_timeline import timeline
 import plotly.graph_objects as go
+import seaborn as sns
+import plotly.figure_factory as ff
+from sklearn import linear_model
 
 ###########################
 
-st.set_page_config(page_title="USA Housing Market in the past 2 Decades",
-     page_icon="🏠",layout="wide")
+st.set_page_config(layout="wide")
 
 st.title('How various factors have influenced the housing prices over the past 2 decades - A case Study 📔')
 
@@ -34,6 +36,10 @@ st.sidebar.markdown('''
         - [Permits](#new-single-family-unit-permits)
         - [Existing home sales](#existing-home-sales)
         - [Foreclosures](#foreclosures)
+- [Most Influencial Factor](#determining-the-most-influencial-factor)
+    - [Correlation Analysis](#correlation-analysis)
+    - [Explanatory Regression Analysis](#explanatory-regression-analysis)
+- [Conclusion](#conclusion)
 - [Biblography](#biblography)
         
 
@@ -452,7 +458,132 @@ col2.write('''
 st.write("In the second quarter of 2020, under the effects of the coronavirus crisis, the mortgage delinquency rate in the United States spiked at 8.22 percent, just one percent down from its peak of 9.3 percent during the subprime mortgage crisis of 2007-2010. Following the drastic increase directly after the outbreak of the pandemic, delinquency rates started gradually declining and reached 4.65 percent as of the fourth quarter of 2021. ")
 
 ##############################
+st.header('Determining the most influencial factor')
+st.write('''
+To Determine the most influencial factor of all the forementioned factors, 
+all the data for the factors were resampled to a similar time intervals and combined into a single dataframe:
+''')
+df = pd.read_csv('finalcombined.csv')
+st.dataframe(df)
 
+st.write('Here CUSUSHPISA is the S&P CoreLogic Case-Shiller U.S. National Home Price NSA Index')
+
+desc = df.describe()
+st.dataframe(desc)
+
+
+
+corr = df.corr()
+corr_inf = pd.DataFrame(corr.CSUSHPISA)
+
+st.header("Correlation Analysis")
+col1,col2 = st.columns((1,1))
+col1.write('''
+
+''')
+col1.dataframe(corr_inf,  height=700)
+
+# Generate a mask for the upper triangle
+mask = np.triu(np.ones_like(corr, dtype=bool))
+
+# Set up the matplotlib figure
+f, ax = plt.subplots(figsize=(11, 9))
+
+# Generate a custom diverging colormap
+cmap = sns.diverging_palette(230, 20, as_cmap=True)
+
+# Draw the heatmap with the mask and correct aspect ratio
+fig = plt.subplots()
+
+sns.heatmap(corr, mask=mask, cmap=cmap, vmax=.3, center=0,
+            square=True, linewidths=.5, cbar_kws={"shrink": .5})
+plt.savefig('corr_dia1.png')
+img = Image.open('corr_dia1.png')
+col2.image(img)
+
+col11,col12 = st.columns((2,1))
+corr_inf_new = corr_inf.head(10)
+fig = px.bar(corr_inf_new)
+col11.plotly_chart(fig)
+col12.title("_")
+col12.write('''
+This analysis shows how the factors are correlated with the index and amongst themselves. Higher the bars in the graph 
+(in magnitude) on the left, the more correlated the factors are with the index. 
+\n For all the plots above the 0 value, there is a positive correlation and vice-versa.
+''')
+
+col1, col2 = st.columns((2,1))
+col1.write('''
+The absolute values indicate the level of correlation and the sign shows the relation, i.e either positive or negative correlation.
+\n The most correlated factors(in order) are:
+''')
+data = abs(corr_inf_new)
+sorted_data = data.sort_values(by=['CSUSHPISA'], ascending=False)
+sorted_data_new = corr_inf_new.sort_values(by=['CSUSHPISA'], ascending=False)
+col2.dataframe(sorted_data, height=700)
+top_5 = sorted_data.head(5)
+
+st.header("Explanatory Regression Analysis")
+
+st.write('''
+Next, a multiple regression analysis was performed on the cleaned and combined data. Given in the case, in which we would like to predict the prices
+of the index, a multiple regression model would have been created and only the factor(s) influencing it the most would be chosen. Here, only the analysis 
+is performed in order to examine whether:\n 1) Is it better to take all the factors into consideration?
+\n2) Is it better to take only the top 5 highest correlated data into consideration? 
+\n 3) Is it better to just take one factor into consideration?
+\n Each of the cases is examined and the output is explained below.
+''')
+##
+col1,col2 = st.columns((1,1))
+
+col1.write('''
+Case 1) Building a multiple regression model taking all the factors into consideration:
+''')
+
+col1.dataframe(corr_inf_new, height=700)
+
+img_mlr_2 = Image.open('MLR_1.png')
+col2.image(img_mlr_2)
+##
+col1.write('''
+Case 2) The asbolute values of the correlation table have been sorted and the 5 factors with the highest correlation are represented in the table
+below. When these factors(only) are taken into consideration:
+''')
+
+
+col1.dataframe(top_5)
+
+img_mlr_2 = Image.open('MLR_5.png')
+col2.image(img_mlr_2)
+##
+col1.write('''
+Case 3) Only the most correlated factor i.e. the population was taken into consideration:
+''')
+
+data = abs(corr_inf_new)
+sorted_data = data.sort_values(by=['CSUSHPISA'], ascending=False)
+top_1 = sorted_data.head(1)
+col1.dataframe(top_1)
+
+img_mlr_2 = Image.open('MLR_O.png')
+col2.image(img_mlr_2)
+
+
+##
+st.header("Conclusion")
+st.write('''
+It is known that for a regression model the R-Squared value always increases and never decres incase the number of variables are increased.
+To make up for this, the Adjusted R-Squared penalises the R-Squared based on the number of variables. A very low Adjusted R-Square may indicate that some
+of the variables are not contributing. And as we take more variables the R-Squared value rises, which is represented in the above cases. 
+However, in the case 1, the Adjusted R-Squared value is very low, indicating that there is no variable that is not contributing at all. 
+\n The probablistic F-Static value for case 3 is lesser than that of case 1, indicating that the most correlated field, "Population", 
+does have great influence on the index. This also allows us to conclude, that the results of the correlation analysis are true and are proven here.
+Thus, we can say that the most import factors in order influencing the *S&P CoreLogic Case-Shiller U.S. National Home Price NSA Index* are the most 
+correlated factors. And that Multiple regression analysis is only useful in quantifying relationships in factors when there is a need to do predective
+modelling and not singling out one most important variable out of multiple variables.
+''')
+
+##############################
 st.header('Biblography 📚')
 html_string = '''<html>
     <head>
