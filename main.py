@@ -471,7 +471,7 @@ desc = df.describe()
 st.dataframe(desc)
 
 
-
+df = df.drop(columns=['DATE'])
 corr = df.corr()
 corr_inf = pd.DataFrame(corr.CSUSHPISA)
 
